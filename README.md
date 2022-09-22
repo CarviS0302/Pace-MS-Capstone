@@ -1,7 +1,7 @@
 **Pace-MS-Capstone**
 Pace Capstone project
 
-# CkyNet
+# SkyNet
 <!--placeholder
 <img src=" " width="200" height="200" alt="Covid-OneTool"/><br/>
 -->
