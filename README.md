@@ -15,7 +15,7 @@ Pace Capstone project
 | [Pete McKechnie]() | mckechniep@gmail.com |
 | [Peter Torrente](https://github.com/pvtorrente) | pvtorrente@gmail.com |
 | [Houqi Zhan](https://github.com/HouqiZhan) | z326316507@gmail.com |
-| [Jincheng Zou](https://github.com/HouqiZhan) | jzcsit@gmail.com |
+| [Jincheng Zou]https://github.com/JinchengGH) | jzcsit@gmail.com |
 
 
 # App description
