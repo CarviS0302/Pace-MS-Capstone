@@ -19,10 +19,13 @@ Pace Capstone project
 
 
 # App description
-  - We aim to design a CRM styled system with greater flexibility for customers. 
-  - We will expand upon the typical enterprise resource planning structure (accounting, procurement, etc.) and give customers a new range of options.
-  - Customers can create their own reports, interact with data, devise their own money management systems. 
-  - Business will be able to offer their customers a system far more interactive and collaborative than before.
+  - We aim to design a POS styled system with greater simplicity for customers. 
+  - We will prioritize fundamental services for day to day operations of a small business.
+  - Users will be able manage inventory, track sales, compare vendors, analyze production outputs and more.
+  - Easy-to-use interface means even the most novice users are capable of creating custom data visualizations and analysis. 
+
+  
+  
 
 
 
