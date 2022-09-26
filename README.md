@@ -11,7 +11,7 @@ Pace Capstone project
 | Name                                      | Contact Info      |
 | ----------------------------------------- | ----------------- |
 | [Kai Wang](https://github.com/CarviS0302)     | kaywong0302@outlook.com |
-| [Josh Krinsky]()       | @pace.edu |
+| [Josh Krinsky](https://github.com/Jkrin393)       | jkrinsky91@gmail.com |
 | [Pete McKechnie]() | mckechniep@gmail.com |
 | [Peter Torrente](https://github.com/pvtorrente) | pvtorrente@gmail.com |
 | [Houqi Zhan](https://github.com/HouqiZhan) | z326316507@gmail.com |
