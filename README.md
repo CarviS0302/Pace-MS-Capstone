@@ -1,8 +1,7 @@
 **Pace-MS-Capstone**
 # SkyNet
-<img src="https://i.pinimg.com/originals/10/b2/f6/10b2f6d95195994fca386842dae53bb2.png" width="650px" />
+<img src="https://github.com/CarviS0302/Pace-MS-Capstone/blob/main/documents/SkyNet_logo.png" width="650px" />
 
-** [Logo Placeholder]**
 
 ## App description
   - We aim to design a POS-styled system with greater simplicity for customers. 
