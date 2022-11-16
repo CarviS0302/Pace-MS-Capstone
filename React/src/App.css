@@ -1,0 +1,174 @@
+.button{
+  border: none;
+  color: white;
+  padding: 7px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 2px;
+}
+.is-primary{
+  background-color: #00d1b2;
+  color: black;
+}
+.is-info{
+  background-color: #209cee;
+}
+.is-success{
+  background-color: #23d160;
+}
+.is-warning{
+  background-color: #ffdd57;
+  color: black;
+}
+.is-danger{
+  background-color: #ff3860;
+}
+.my-table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+.my-table th, .my-table td {
+  text-align: left;
+  padding: 8px;
+  border: #f2f2f2 1px solid;
+}
+.my-table tr:nth-child(even){background-color: #f2f2f2}
+.my-table th {
+  background-color: #3f4d67;
+  color: white;
+}
+.is-fullwidth{
+  width: 100%;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 50%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s;
+  /* center it */
+  left: 50%;
+  transform: translateX(-50%);
+  }
+
+
+.delete {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #3f4d67;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #3f4d67;
+  color: white;
+}
+
+
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+.field{
+  margin-bottom: 10px;
+}
+.field label{
+  display: block;
+  margin-bottom: 5px;
+}
+.field input{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.field textarea{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.field select{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.field .control{
+  display: flex;
+}
+.field .control .select{
+  width: 100%;
+}
+.field .control .select select{
+  width: 100%;
+}
+.field .control .select select option{
+  width: 100%;
+}
+.field .control .select select option:hover{
+  background-color: #ddd;
+}
+.modal-card-title{
+  font-size: xx-large;
+}
+.modal form{
+  /* padding: 10px; */
+  font-size: larger;
+}
