@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function item() {
+export default function Item() {
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
