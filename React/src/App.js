@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // React Router import S
 import SupplierManagement from './pages/suppliermanagement';
 import Item from './pages/item';
+import Inventory from './pages/inventory';
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/suppliermanagement" element={<SupplierManagement />} />
                                 <Route path="/item" element={<Item />} />
-                                <Route path="/inventory" element={<Item />} />
+                                <Route path="/inventory" element={<Inventory />} />
                                 <Route path="/order" element={<Item />} />
                             </Routes>
                         </div>
