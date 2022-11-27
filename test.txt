@@ -16,6 +16,10 @@ this is a test
 >>>>>>> origin
 =======
 this is a test
+<<<<<<< HEAD
+>>>>>>> origin
+=======
+this is a test
 >>>>>>> origin
 
 qwerqewr123
