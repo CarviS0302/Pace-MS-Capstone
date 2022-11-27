@@ -16,7 +16,7 @@ def createInvoice(request):
 
 
 def createBuildInvoice(request, slug):
-    #fetch that invoice
+    #fetch that invoice ...
     try:
         invoice = Invoice.objects.get(slug=slug)
         pass
