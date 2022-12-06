@@ -40,5 +40,5 @@ class GoodsReceiptSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['itemID','description','cost', 'sellingPrice', 'note', 'supplierID']
+        fields = ['orderID','quantity','orderDate', 'orderPrice', 'customerID', 'itemID', 'shipID' ]
 
