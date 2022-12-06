@@ -1,8 +1,14 @@
 import React from "react";
 
 export default function SupplierManagement() {
+
   const [suppliers, setSuppliers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  function getToken() {
+    const tokenString = sessionStorage.getItem('token');
+  return JSON.parse(tokenString);
+
+}
   let formDatas = {
     supplierID: "",
     company: "",
@@ -16,12 +22,19 @@ export default function SupplierManagement() {
     note: "",
   };
   React.useEffect(() => {
-    fetch("http://localhost:8000/supplier")
+    fetch("http://localhost:8000/supplier",{
+      headers: new Headers({
+        'Authorization': 'Bearer '+ getToken()
+    })
+    })
       .then((res) => res.json())
       .then((data) => {
         setSuppliers(data);
         suppliers.map((supplier) => {});
         setLoading(false);
+      }).catch((error) => {
+        console.log('error: ' + error);
+        // this.setState({ requestFailed: true });
       });
   }, []);
   const inputChanged = (event) => {
@@ -48,7 +61,12 @@ export default function SupplierManagement() {
   const editSupplier = (supplierID) => {
     console.log(supplierID);
     console.log("edit");
-    fetch("http://localhost:8000/supplier/find/" + supplierID)
+    fetch("http://localhost:8000/supplier/find/" + supplierID,{
+      
+        headers: new Headers({
+          'Authorization': 'Bearer '+ getToken()
+      })
+    })
       .then((res) => res.json())
       .then((data) => {
         formDatas.supplierID = data.supplierID;
@@ -71,6 +89,9 @@ export default function SupplierManagement() {
     if (confirmDelete) {
       fetch("http://localhost:8000/supplier/delete/" + supplierID, {
         method: "DELETE",
+        headers: new Headers({
+          'Authorization': 'Bearer '+ getToken()
+      })
       }).then((res) => {
         if (res.ok) {
           alert("Supplier deleted");
@@ -86,7 +107,7 @@ export default function SupplierManagement() {
     submitForm(formDatas);
     // reload the page
     closeModal();
-    window.location.reload();
+    // window.location.reload();
 
   };
   function getSupplier(supplierID) {
@@ -104,6 +125,7 @@ export default function SupplierManagement() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': 'Bearer '+ getToken(),
         },
         body: JSON.stringify(datas),
       })
@@ -111,12 +133,14 @@ export default function SupplierManagement() {
         .then((data) => {
           console.log(data);
           resetForm();
+          window.location.reload();
         });
     } else {
-    fetch("http://localhost:8000/supplier/update/" + datas.supplierID, {
+    fetch("http://localhost:8000/supplier/update/" + datas.supplierID+"/", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': 'Bearer '+ getToken(),
       },
       body: JSON.stringify(datas),
     })
@@ -124,6 +148,7 @@ export default function SupplierManagement() {
       .then((data) => {
         console.log(data);
         resetForm();
+        window.location.reload();
       // });
     });
   }
@@ -192,6 +217,7 @@ export default function SupplierManagement() {
         </tr>
       </thead>
       <tbody>
+        
         {suppliers.map((supplier, i) => (
           <tr key={i}>
             <td>{i+1}</td>
@@ -221,7 +247,7 @@ export default function SupplierManagement() {
         <button className="button delete is-danger" aria-label="close" onClick={closeModal} >X</button>
       </header>
       <section className="modal-body">
-        <form>
+        <form id="supplierForm">
           <div className="field">
             <label className="label">Company</label>
             <div className="control">

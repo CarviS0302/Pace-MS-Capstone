@@ -3,29 +3,35 @@ from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
+from rest_framework.permissions import IsAuthenticated
+
 from .models import *
 from .serializer import *
 # Create your views here.
 
 class ItemView(APIView):
+    # permission_classes = (IsAuthenticated,)
     def get(self, request: Request):
         items = Item.objects.all()
         serialized_item = ItemSerializer(items, many = True)
         return Response(serialized_item.data)
 
 class SupplierView(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request: Request):
         suppliers = Supplier.objects.all()
         serialized_supplier = SupplierSerializer(suppliers, many = True)
         return Response(serialized_supplier.data)
 
 class FindSupplierView(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request: Request, pk):
         suppliers = Supplier.objects.get(pk = pk)
         serialized_supplier = SupplierSerializer(suppliers, many = False)
         return Response(serialized_supplier.data)
     
 class AddSupplierView(APIView):
+    permission_classes = (IsAuthenticated,)
     def post(self, request: Request):
         supplier = SupplierSerializer(data = request.data)
         if supplier.is_valid():
@@ -35,6 +41,7 @@ class AddSupplierView(APIView):
             return Response(supplier.errors)
         
 class UpdateSupplierView(APIView):
+    permission_classes = (IsAuthenticated,)
     def put(self, request: Request, pk):
         supplier = Supplier.objects.get(pk = pk)
         supplier_serializer = SupplierSerializer(supplier, data = request.data)
@@ -45,6 +52,7 @@ class UpdateSupplierView(APIView):
             return Response(supplier_serializer.errors)
         
 class DeleteSupplierView(APIView):
+    permission_classes = (IsAuthenticated,)
     def delete(self, request: Request, pk):
         supplier = Supplier.objects.get(pk = pk)
         supplier.delete()

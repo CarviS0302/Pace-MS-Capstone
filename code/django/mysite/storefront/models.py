@@ -23,7 +23,7 @@ class Supplier(models.Model):
     street = models.CharField(max_length = 30)
     city = models.CharField(max_length = 30)
     state = models.CharField(max_length = 30)
-    zip = models.IntegerField(max_length= 10)
+    zip = models.IntegerField()
     note = models.CharField(max_length = 300)
     def __str__(self):
         return self.company
@@ -40,7 +40,7 @@ class Customer(models.Model):
     street = models.CharField(max_length = 30)
     city = models.CharField(max_length = 30)
     state = models.CharField(max_length = 30)
-    zip = models.IntegerField(max_length= 10)
+    zip = models.IntegerField()
     note = models.CharField(max_length = 300)
     def __str__(self):
         return self.email
@@ -56,7 +56,7 @@ class Shipment(models.Model):
 class Inventory(models.Model):
     stackID = models.AutoField(primary_key=True)
     itemID = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity = models.IntegerField(max_length= 10)
+    quantity = models.IntegerField()
     expirationDate = models.DateField()
     inboundDate = models.DateField()
     def __str__(self):
@@ -75,7 +75,7 @@ class GoodsReceipt(models.Model):
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
     itemID = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity = models.IntegerField(max_length= 10)
+    quantity = models.IntegerField()
     orderDate = models.DateField()
     orderPrice = models.DecimalField(max_digits=11, decimal_places=2)
     customerID = models.ForeignKey(Customer, on_delete=models.CASCADE)
