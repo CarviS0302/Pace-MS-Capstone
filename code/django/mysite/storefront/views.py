@@ -123,3 +123,38 @@ class OrderView(APIView):
         orders = Order.objects.all()
         serialized_order = OrderSerializer(orders, many = True)
         return Response(serialized_order.data)
+
+class FindOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request: Request, pk):
+        orders = Order.objects.get(pk = pk)
+        serialized_order = OrderSerializer(orders, many = False)
+        return Response(serialized_order.data)
+
+class AddOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request: Request):
+        order = OrderSerializer(data = request.data)
+        if order.is_valid():
+            order.save()
+            return Response(order.data)
+        else:
+            return Response(order.errors)
+
+class UpdateOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request: Request, pk):
+        order = Order.objects.get(pk = pk)
+        order_serializer = OrderSerializer(order, data = request.data)
+        if order_serializer.is_valid():
+            order_serializer.save()
+            return Response(order_serializer.data)
+        else:
+            return Response(order_serializer.errors)
+
+class DeleteOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def delete(self, request: Request, pk):
+        order = Order.objects.get(pk = pk)
+        order.delete()
+        return Response("Order deleted")
