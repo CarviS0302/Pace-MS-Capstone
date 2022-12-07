@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function SupplierManagement() {
-
   const [suppliers, setSuppliers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   function getToken() {
@@ -62,7 +61,7 @@ export default function SupplierManagement() {
     console.log(supplierID);
     console.log("edit");
     fetch("http://localhost:8000/supplier/find/" + supplierID,{
-      
+
         headers: new Headers({
           'Authorization': 'Bearer '+ getToken()
       })
@@ -82,7 +81,7 @@ export default function SupplierManagement() {
         console.log(formDatas);
         addSupplier();
       });
-      
+
   };
   function deleteSuppliers(supplierID) {
     let confirmDelete = window.confirm("Are you sure you want to delete?");
@@ -152,7 +151,7 @@ export default function SupplierManagement() {
       // });
     });
   }
-    
+
   }
 
   const addSupplier = () => {
@@ -162,7 +161,7 @@ export default function SupplierManagement() {
     for(let key in formDatas) {
       try {
       document.getElementById(key).value = formDatas[key];
-        
+
       } catch (error) {
         console.log(error);
       }
@@ -217,7 +216,7 @@ export default function SupplierManagement() {
         </tr>
       </thead>
       <tbody>
-        
+
         {suppliers.map((supplier, i) => (
           <tr key={i}>
             <td>{i+1}</td>
@@ -299,7 +298,7 @@ export default function SupplierManagement() {
               <div className="field">
             <label className="label">Note</label>
             <div className="control">
-              <input className="input" type="text"  name="note" id="note"  onChange={inputChanged} placeholder="Note" />
+              <input className="input" type="text" name="note" id="note"  onChange={inputChanged} placeholder="Note" />
               </div>
               </div>
         </form>
