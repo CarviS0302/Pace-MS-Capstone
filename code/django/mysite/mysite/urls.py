@@ -1,31 +1,46 @@
-"""mysite URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
 from django.urls import path,include
-from storefront import views
-from rest_framework_simplejwt import views as jwt_views
+from . import views
+
+#store specific urls.py file
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('', include('storefront.urls')),
-    path('api/', include('authentication.urls', namespace='authentication')),
-   	# path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('login', views.login_view),
+    
+    
+     path('item/', views.ItemView.as_view(), name='storefront-item'),
 
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+     path('inventory/', views.InventoryView.as_view(), name='storefront-inventory'),
+
+     path('inventory/add/', views.AddInventoryView.as_view(), name='storefront-inventory'),
+
+     path('inventory/update/<int:pk>/', views.UpdateInventoryView.as_view(), name='storefront-inventory'),
+
+     path('inventory/delete/<int:pk>/', views.DeleteInventoryView.as_view(), name='storefront-inventory'),
+
+
+     path('customer/', views.CustomerView.as_view(), name='storefront-customer'),
+
+     path('order/', views.OrderView.as_view(), name='storefront-order'),
+
+     path('supplier/', views.SupplierView.as_view(), name='storefront-supplier'),
+     
+     path('supplier/find/<int:pk>/', views.FindSupplierView.as_view(), name='storefront-supplier'),
+
+     # AddSupplierView, UpdateSupplierView, DeleteSupplierView
+
+     path('supplier/add/', views.AddSupplierView.as_view(), name='storefront-supplier'),
+
+     path('supplier/update/<int:pk>/', views.UpdateSupplierView.as_view(), name='storefront-supplier'),
+
+     # path('supplier/delete/', views.DeleteSupplierView.as_view(), name='storefront-supplier'),
+     # delete has id in request.data
+     path('supplier/delete/<int:pk>/', views.DeleteSupplierView.as_view(), name='storefront-supplier'),
+     
+
+     path('shipment/', views.ShipmentView.as_view(), name='storefront-shipment'),
+
+     path('goodsReceipt/', views.GoodsReceiptView.as_view(), name='storefront-goodsReceipt'),
+     
+
+
+
 ]
-
