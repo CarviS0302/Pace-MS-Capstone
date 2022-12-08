@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const Home = () => (
@@ -72,7 +71,7 @@ const Home = () => (
                                 <div className="col-xl-8 col-md-6">
                                     <div className="card Recent-Users">
                                         <div className="card-header">
-                                            <h5>Recent Users</h5>
+                                            <h5>Recent Purchases</h5>
                                         </div>
                                         <div className="card-block px-0 py-3">
                                             <div className="table-responsive">
@@ -81,7 +80,7 @@ const Home = () => (
                                                         <tr className="unread">
                                                             <td><img className="rounded-circle" src="assets/images/user/avatar-1.jpg" alt="activity-user"/></td>
                                                             <td>
-                                                                <h6 className="mb-1">Isabella Christensen</h6>
+                                                                <h6 className="mb-1">Order 1</h6>
                                                                 <p className="m-0">Lorem Ipsum is simply…</p>
                                                             </td>
                                                             <td>
