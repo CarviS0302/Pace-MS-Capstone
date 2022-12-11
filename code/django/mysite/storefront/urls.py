@@ -10,9 +10,18 @@ urlpatterns = [
 
      path('inventory/', views.InventoryView.as_view(), name='storefront-inventory'),
 
+     path('inventory/add/', views.AddInventoryView.as_view(), name='storefront-inventory'),
+
+     path('inventory/update/<int:pk>/', views.UpdateInventoryView.as_view(), name='storefront-inventory'),
+
+     path('inventory/delete/<int:pk>/', views.DeleteInventoryView.as_view(), name='storefront-inventory'),
+
+
      path('customer/', views.CustomerView.as_view(), name='storefront-customer'),
 
      path('order/', views.OrderView.as_view(), name='storefront-order'),
+
+     path('order/add/', views.AddOrderView.as_view(), name='storefront-order'),
 
      path('supplier/', views.SupplierView.as_view(), name='storefront-supplier'),
      
