@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.scanner {
+  position: fixed;
+  width: 80vw;
+  height: 80vh;
+  left: 10vw;
+  top: 10vh;
+  z-index: 10000;
+}
