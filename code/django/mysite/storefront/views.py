@@ -10,11 +10,46 @@ from .serializer import *
 # Create your views here.
 
 class ItemView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request: Request):
         items = Item.objects.all()
         serialized_item = ItemSerializer(items, many = True)
         return Response(serialized_item.data)
+
+class FindItemView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request: Request, pk):
+        items = Item.objects.get(pk = pk)
+        serialized_item = ItemSerializer(items, many = False)
+        return Response(serialized_item.data)
+
+class AddItemView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request: Request):
+        item = ItemSerializer(data = request.data)
+        if item.is_valid():
+            item.save()
+            return Response(item.data)
+        else:
+            return Response(item.errors)
+
+class UpdateItemView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request: Request, pk):
+        item = Item.objects.get(pk = pk)
+        item_serializer = ItemSerializer(item, data = request.data)
+        if item_serializer.is_valid():
+            item_serializer.save()
+            return Response(item_serializer.data)
+        else:
+            return Response(item_serializer.errors)
+
+class DeleteItemView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def delete(self, request: Request, pk):
+        item = Item.objects.get(pk = pk)
+        item.delete()
+        return Response("Item deleted")
 
 class SupplierView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -29,7 +64,7 @@ class FindSupplierView(APIView):
         suppliers = Supplier.objects.get(pk = pk)
         serialized_supplier = SupplierSerializer(suppliers, many = False)
         return Response(serialized_supplier.data)
-    
+
 class AddSupplierView(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request: Request):
@@ -39,7 +74,7 @@ class AddSupplierView(APIView):
             return Response(supplier.data)
         else:
             return Response(supplier.errors)
-        
+
 class UpdateSupplierView(APIView):
     permission_classes = (IsAuthenticated,)
     def put(self, request: Request, pk):
@@ -50,15 +85,15 @@ class UpdateSupplierView(APIView):
             return Response(supplier_serializer.data)
         else:
             return Response(supplier_serializer.errors)
-        
+
 class DeleteSupplierView(APIView):
     permission_classes = (IsAuthenticated,)
     def delete(self, request: Request, pk):
         supplier = Supplier.objects.get(pk = pk)
         supplier.delete()
         return Response("Supplier deleted")
-    
-  
+
+
 class CustomerView(APIView):
     def get(self, request: Request):
         customers = Customer.objects.all()
@@ -89,7 +124,37 @@ class OrderView(APIView):
         serialized_order = OrderSerializer(orders, many = True)
         return Response(serialized_order.data)
 
-    
+class FindOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request: Request, pk):
+        orders = Order.objects.get(pk = pk)
+        serialized_order = OrderSerializer(orders, many = False)
+        return Response(serialized_order.data)
 
+class AddOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request: Request):
+        order = OrderSerializer(data = request.data)
+        if order.is_valid():
+            order.save()
+            return Response(order.data)
+        else:
+            return Response(order.errors)
 
+class UpdateOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def put(self, request: Request, pk):
+        order = Order.objects.get(pk = pk)
+        order_serializer = OrderSerializer(order, data = request.data)
+        if order_serializer.is_valid():
+            order_serializer.save()
+            return Response(order_serializer.data)
+        else:
+            return Response(order_serializer.errors)
 
+class DeleteOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def delete(self, request: Request, pk):
+        order = Order.objects.get(pk = pk)
+        order.delete()
+        return Response("Order deleted")
