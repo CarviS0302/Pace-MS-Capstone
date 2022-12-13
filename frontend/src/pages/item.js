@@ -284,7 +284,7 @@ export default function Item() {
               <div className="field">
                 <label className="label">Selling Price</label>
                 <div className="control">
-                <input value={sellingPrice} onChange={e => setSellingPrice(e.target.value)} className="input" type="tel" placeholder="Phone Number"/>
+                <input value={sellingPrice} onChange={e => setSellingPrice(e.target.value)} className="input" type="tel" placeholder="Selling Price"/>
                 </div>
               </div>
               <div className="field">
