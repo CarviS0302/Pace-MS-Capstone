@@ -9,6 +9,7 @@ class Item(models.Model):
     note = models.CharField(max_length=250)
     supplierID = models.CharField(max_length = 100,null=True, blank=True)
     classification = models.CharField(max_length=20, null = True)#will change null to false later
+    barcode = models.BigIntegerField(null= True)
 
     def __str__(self):
         return self.description
