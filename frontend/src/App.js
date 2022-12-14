@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/dashboard';
 import Login from './components/Auth/login';
+import FindTrackingStatus from './components/trackingLookup';
 // import
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // React Router import S
@@ -40,6 +41,7 @@ function App() {
                                 <Route path="/item" element={<Item />} />
                                 <Route path="/inventory" element={<Item />} />
                                 <Route path="/order" element={<Item />} />
+                                <Route path="/tracking" element ={<FindTrackingStatus/>}  />
                             </Routes>
                         </div>
                     </div>
