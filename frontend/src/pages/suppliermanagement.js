@@ -3,6 +3,10 @@ import React from "react";
 export default function SupplierManagement() {
   const [suppliers, setSuppliers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+
+  const [Country, setCountry] = React.useState('');
+  const [State, setState] = React.useState('');
+
   function getToken() {
     const tokenString = sessionStorage.getItem('token');
   return JSON.parse(tokenString);
@@ -21,7 +25,22 @@ export default function SupplierManagement() {
     note: "",
   };
   React.useEffect(() => {
-    fetch("http://localhost:8000/supplier",{
+    listItem();
+  }, []);
+
+  const CountryChanged = (event) => {
+    setCountry(event.target.value);
+  }
+
+  const StateChanged = (event) => {
+    setState(event.target.value);
+  }
+
+  const listItem = () => {
+    let url = "http://localhost:8000/supplier?";
+    url += "country=" + Country;
+    url += "&state=" + State;
+    fetch(url,{
       headers: new Headers({
         'Authorization': 'Bearer '+ getToken()
     })
@@ -35,7 +54,8 @@ export default function SupplierManagement() {
         console.log('error: ' + error);
         // this.setState({ requestFailed: true });
       });
-  }, []);
+  }
+
   const inputChanged = (event) => {
     formDatas[event.target.name] = event.target.value;
   };
@@ -181,6 +201,20 @@ export default function SupplierManagement() {
     let modal = document.getElementById("myModal");
     modal.style.display = "none";
   };
+
+
+  const search = () => {
+    listItem();
+  }
+
+  const reset = () => {
+    setCountry('');
+    setState('');
+    setTimeout(() => {
+      listItem();
+    }, 10);
+  }
+
   // loading
   if (loading) {
     return <div>Loading...</div>;
@@ -188,10 +222,34 @@ export default function SupplierManagement() {
 
 
 
+
+
     return (
   <div>
     <div>
       <h1 className="title is-1">Supplier Management</h1>
+      <div style={{margin: '10px', padding: '10px'}}>
+            Country:
+            <select value={Country} onChange={CountryChanged} style={{margin: '10px', padding: '10px'}}>
+              <option style={{display:'none'}}></option>
+              <option value="USA">USA</option>
+              <option value="Est sit corporis e">Est sit corporis e</option>
+              <option value="Dolor omnis et est">Dolor omnis et est</option>
+              <option value="Ea vitae consectetur">Ea vitae consectetur</option>
+              <option value="Aliquip sed maxime c">Aliquip sed maxime c</option>
+            </select>
+            State:
+            <select value={State} onChange={StateChanged} style={{margin: '10px', padding: '10px'}}>
+              <option style={{display:'none'}}></option>
+              <option value="Est illum tempora">Est illum tempora</option>
+              <option value="Quos et facilis volu">Quos et facilis volu</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Optio vel laborum">Optio vel laborum</option>
+              <option value="Texas">Texas</option>
+            </select>
+            <button className="button is-primary" onClick={search} style={{margin: '10px', padding: '10px'}}>Search</button>
+            <button className="button is-primary" onClick={reset} style={{margin: '10px', padding: '10px'}}>Reset</button>
+        </div>
       {/* add button */}
       <button className="button is-primary" onClick={addSupplier} >Add Supplier</button>
     </div>

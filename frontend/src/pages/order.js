@@ -1,97 +1,114 @@
 import React from "react";
 
-export default function Order() {
-
+export default function OrderPage() {
   const [orders, setOrders] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  function getToken() {
-    const tokenString = sessionStorage.getItem('token');
-  return JSON.parse(tokenString);
 
-}
+  const [dateOrder, setDateOrder] = React.useState('');
+  const [priceOrder, setPriceOrder] = React.useState('');
+  const [customerID, setCustomerID] = React.useState('');
+
   let formDatas = {
     orderID: "",
     itemID: "",
     quantity: "",
-    orderDate: "",
     orderPrice: "",
     customerID: "",
-    shipID: "",
+    shipID: ""
   };
+
   React.useEffect(() => {
-    fetch("http://localhost:8000/order",{
-      headers: new Headers({
-        'Authorization': 'Bearer '+ getToken()
-    })
-    })
+    listItem();
+  }, []);
+
+  const listItem = () => {
+    let url = "http://localhost:8000/order/?";
+    url += "orderDate=" + dateOrder;
+    url += "&orderPrice=" + priceOrder;
+    url += "&customerId=" + customerID;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setOrders(data);
-        orders.map((order) => {});
+        // orders.map((order) => {});
         setLoading(false);
-      }).catch((error) => {
-        console.log('error: ' + error);
-        // this.setState({ requestFailed: true });
       });
-  }, []);
-  const inputChanged = (event) => {
-    formDatas[event.target.name] = event.target.value;
+  }
+
+  const dateChanged = (event) => {
+    setDateOrder(event.target.value)
+  }
+
+  const priceChanged = (event) => {
+    setPriceOrder(event.target.value)
+  }
+
+  const customerIDChanged = (event) => {
+    setCustomerID(event.target.value)
+  }
+
+  const editOrder = (orderID) => {
+    // console.log(orderID);
   };
-  function resetForm() {
-    document.getElementById("orderForm").reset();
+  const deleteOrder = (orderID) => {
+    let confirmDelete = window.confirm("Are you sure you want to delete?");
+    // if (confirmDelete) {
+    //   fetch("http://localhost:8000/order/" + orderID, {
+    //     method: "DELETE",
+    //   }).then((res) => {
+    //     if (res.ok) {
+    //       alert("Order deleted");
+    //       window.location.reload();
+    //     }
+    //   });
+    // }
+
+  };
+  const addOrder = () => {
+    let modal = document.getElementById("myModal");
+    modal.style.display = "block";
     formDatas = {
       orderID: "",
       itemID: "",
       quantity: "",
-      orderDate: "",
       orderPrice: "",
       customerID: "",
-      shipID: "",
+      shipID: ""
     };
-  }
-  const handleSubmit = (event) => {
-    submitForm(formDatas);
-  };
-  const editOrder = (orderID) => {
-    console.log(orderID);
-    console.log("edit");
-    fetch("http://localhost:8000/order/find/" + orderID,{
-
-        headers: new Headers({
-          'Authorization': 'Bearer '+ getToken()
-      })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        formDatas.orderID = data.orderID;
-        formDatas.itemID = data.itemID;
-        formDatas.quantity = data.quantity;
-        formDatas.orderDate = data.orderDate;
-        formDatas.orderPrice = data.orderPrice;
-        formDatas.customerID = data.customerID;
-        formDatas.shipID = data.shipID;
-        console.log(formDatas);
-        addOrder();
-      });
-
-  };
-  function deleteOrder(orderID) {
-    let confirmDelete = window.confirm("Are you sure you want to delete?");
-    if (confirmDelete) {
-      fetch("http://localhost:8000/order/delete/" + orderID, {
-        method: "DELETE",
-        headers: new Headers({
-          'Authorization': 'Bearer '+ getToken()
-      })
-      }).then((res) => {
-        if (res.ok) {
-          alert("Order deleted");
-          window.location.reload();
-        }
-      });
+    for(let key in formDatas) {
+      try {
+          document.getElementById(key).value = formDatas[key];
+      } catch (error) {
+          console.log(error);
+      }
     }
-
   };
+
+  const inputChanged = (event) => {
+    formDatas[event.target.name] = event.target.value;
+  };
+
+  function submitForm(datas) {
+    fetch("http://localhost:8000/order/add/", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datas),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          if(data.code == 0){
+            window.confirm(data.msg);
+          }else{
+            window.location.reload();
+          }
+        });
+
+}
+
   const saveChanges = () => {
     // get the values from the form
     console.log("saving changes");
@@ -101,65 +118,53 @@ export default function Order() {
     // window.location.reload();
 
   };
-  function getOrder(orderID) {
-    fetch("http://localhost:8000/order/find/" + orderID)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      }
-      );
-  };
 
-  function submitForm(datas) {
-    if (datas.orderID === "") {
-      fetch("http://localhost:8000/order/add/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer '+ getToken(),
-        },
-        body: JSON.stringify(datas),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          resetForm();
-          window.location.reload();
-        });
-    } else {
-    fetch("http://localhost:8000/order/update/" + datas.orderID+"/", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer '+ getToken(),
-      },
-      body: JSON.stringify(datas),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        resetForm();
-        window.location.reload();
-      // });
+  const search = () => {
+    listItem();
+  }
+
+  const reset = () => {
+    setDateOrder('');
+    setPriceOrder('');
+    setCustomerID('');
+    setTimeout(() => {
+      listItem();
+    }, 0)
+  }
+
+
+  const print = (order) => {
+    let iframe = document.createElement('IFRAME');
+    iframe.setAttribute('style', 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;size: auto;margin: 0mm;');
+    document.body.appendChild(iframe);
+    let doc = iframe.contentWindow.document;
+    doc.write("<h2 style='margin:auto;text-align: center;'>Invoice</h2><br/>");
+    let tbody = "";
+    Object.keys(order).forEach(function(key) {
+      let tr = "<tr>"
+      tr += "<th style='border: 1px solid black;height: 50px;'>" + key + "</th>"
+      tr += "<td style='border: 1px solid black;;height: 50px;'>" + order[key] + "</td>"
+      tr+= "</tr>"
+      tbody += tr;
     });
-  }
-
-  }
-
-  const addOrder = () => {
-    let modal = document.getElementById("myModal");
-    modal.style.display = "block";
-    // set the values of the form
-    for(let key in formDatas) {
-      try {
-      document.getElementById(key).value = formDatas[key];
-
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
+    let table = "<table style= 'margin:auto; border: 1px solid black; text-align: center; width: 90%;' cellspacing='0'>"
+                +"<thead><tr>"
+                // +"<th style='border: 1px solid black;'>itemID</th>"
+                // +"<th style='border: 1px solid black;'>quantity</th>"
+                // +"<th style='border: 1px solid black;'>inboundDate</th>"
+                // +"<th style='border: 1px solid black;'>expirationDate</th>"
+                +"</tr></thead><tbody>"
+                + tbody
+                +"</tbody></table>";
+    
+    doc.write(table);
+    // doc.body.innerHTML = obj.innerHTML;
+    doc.close();
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    document.body.removeChild(iframe);
   };
+
   const closeModal = () => {
     let modal = document.getElementById("myModal");
     modal.style.display = "none";
@@ -169,13 +174,39 @@ export default function Order() {
     return <div>Loading...</div>;
   }
 
+
+
     return (
   <div>
     <div>
       <h1 className="title is-1">Order</h1>
+      <div style={{margin: '10px'}}>
+            OrderDate:
+            <select placeholder="cost" value={dateOrder} onChange={dateChanged} style={{margin: '10px', padding: '10px'}}>
+              <option style={{display:'none'}}></option>
+              <option value="orderDate">Low to High</option>
+              <option value="-orderDate">High to Low</option>
+            </select>
+            OrderPrice:
+            <select placeholder="price" value={priceOrder} onChange={priceChanged} style={{margin: '10px', padding: '10px'}}>
+              <option style={{display:'none'}}></option>
+              <option value="orderPrice">Low to High</option>
+              <option value="-orderPrice">High to Low</option>
+            </select>
+            CustomerID:
+            <select value={customerID} onChange={customerIDChanged} style={{margin: '10px', padding: '10px'}}>
+              <option style={{display:'none'}}></option>
+              <option value="customerID_id">Low to High</option>
+              <option value="-customerID_id">High to Low</option>
+            </select>
+            <button className="button is-primary" onClick={search} style={{margin: '10px', padding: '10px'}}>Search</button>
+            <button className="button is-primary" onClick={reset} >Reset</button>
+        </div>
       {/* add button */}
       <button className="button is-primary" onClick={addOrder}>Add Order</button>
     </div>
+
+
 
       <div className="data-table">
       <table className="my-table">
@@ -192,7 +223,6 @@ export default function Order() {
         </tr>
       </thead>
       <tbody>
-
         {orders.map((order, i) => (
           <tr key={i}>
             <td>{i+1}</td>
@@ -202,9 +232,13 @@ export default function Order() {
             <td>{order.orderPrice}</td>
             <td>{order.customerID}</td>
             <td>{order.shipID}</td>
+            {/* <td>{order.state}</td>
+            <td>{order.zip}</td>
+            <td>{order.note}</td> */}
             <td>
-              <button className="button is-warning is-fullwidth" onClick={() => editOrder(order.orderID)}>Edit</button>
-              <button className="button is-danger is-fullwidth" onClick={() => deleteOrder(order.orderID)}>Delete</button>
+              <button className="button is-warning is-fullwidth" onClick={() => print(order)}>Print</button>
+              {/* <button className="button is-warning is-fullwidth" onClick={editOrder(order.orderID)}>Edit</button>
+              <button className="button is-danger is-fullwidth" onClick={deleteOrder}>Delete</button> */}
             </td>
           </tr>
         ))}
@@ -216,44 +250,50 @@ export default function Order() {
     <div className="modal-content">
       <header className="modal-header">
         <p className="modal-card-title">Add Order</p>
-        <button className="button delete is-danger" aria-label="close" onClick={closeModal}>X</button>
+        <button className="button delete is-danger" aria-label="close" onClick={closeModal} >X</button>
       </header>
       <section className="modal-body">
-        <form id="orderForm">
+        <form>
           <div className="field">
             <label className="label">Item ID</label>
             <div className="control">
-              <input className="input" type="text"  name="itemID" id="itemID" onChange={inputChanged} placeholder="Item ID" />
+              <input className="input" type="text" placeholder="Item ID" id="itemID" name="itemID" onChange={inputChanged}/>
             </div>
             </div>
             <div className="field">
             <label className="label">Quantity</label>
             <div className="control">
-              <input className="input" type="text" name="quantity" id="quantity"  onChange={inputChanged} placeholder="Quantity" />
+              <input className="input" type="number" placeholder="Quantity" id="quantity" name="quantity" onChange={inputChanged}/>
               </div>
               </div>
+              {/* <div className="field">
+            <label className="label">Email</label>
+            <div className="control">
+              <input className="input" type="tel" placeholder="Email" />
+              </div>
+              </div> */}
               <div className="field">
             <label className="label">Order Date</label>
             <div className="control">
-              <input className="input" type="tel" name="orderDate" id="orderDate"  onChange={inputChanged} placeholder="Order Date" />
+              <input className="input" type="text" placeholder="Order Date" id="orderDate" name="orderDate" onChange={inputChanged}/>
               </div>
               </div>
-              <div className="field">
+              {/* <div className="field">
             <label className="label">Order Price</label>
             <div className="control">
-              <input className="input" type="text" name="orderPrice" id="orderPrice"  onChange={inputChanged} placeholder="Order Price" />
+              <input className="input" type="text" placeholder="Order Price" id="orderPrice" name="orderPrice" onChange={inputChanged}/>
               </div>
-              </div>
+              </div> */}
               <div className="field">
             <label className="label">Customer ID</label>
             <div className="control">
-              <input className="input" type="text" name="customerID" id="customerID"  onChange={inputChanged} placeholder="Customer ID" />
+              <input className="input" type="text" placeholder="Customer ID" id="customerID" name="customerID" onChange={inputChanged}/>
               </div>
               </div>
               <div className="field">
             <label className="label">Ship ID</label>
             <div className="control">
-              <input className="input" type="text" name="shipID" id="shipID"  onChange={inputChanged} placeholder="Ship ID" />
+              <input className="input" type="text" placeholder="Ship ID" id="shipID" name="shipID" onChange={inputChanged}/>
               </div>
               </div>
         </form>
