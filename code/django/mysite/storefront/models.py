@@ -14,7 +14,6 @@ class Item(models.Model):
     def __str__(self):
         return self.description
 
-    
 class Supplier(models.Model):
     supplierID = models.AutoField(primary_key=True)
     company = models.CharField(max_length = 30)
@@ -28,7 +27,6 @@ class Supplier(models.Model):
     note = models.CharField(max_length = 300)
     def __str__(self):
         return self.company
-
 
 
 class Customer(models.Model):
@@ -45,7 +43,7 @@ class Customer(models.Model):
     note = models.CharField(max_length = 300)
     def __str__(self):
         return self.email
-    
+
 class Shipment(models.Model):
     shipID = models.AutoField(primary_key=True)
     trackingNo = models.CharField(max_length=30)
