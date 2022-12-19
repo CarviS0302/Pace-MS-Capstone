@@ -14,6 +14,14 @@ urlpatterns = [
 
      path('order/', views.OrderView.as_view(), name='storefront-order'),
 
+     path('order/find/<int:pk>/', views.FindOrderView.as_view(), name='storefront-order'),
+
+     path('order/add/', views.AddOrderView.as_view(), name='storefront-order'),
+
+     path('order/update/<int:pk>/', views.UpdateOrderView.as_view(), name='storefront-order'),
+
+     path('order/delete/<int:pk>/', views.DeleteOrderView.as_view(), name='storefront-order'),
+
      path('supplier/', views.SupplierView.as_view(), name='storefront-supplier'),
 
      path('supplier/find/<int:pk>/', views.FindSupplierView.as_view(), name='storefront-supplier'),
