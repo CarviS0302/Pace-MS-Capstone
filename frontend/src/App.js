@@ -40,6 +40,7 @@ function App() {
                                 <Route path="/item" element={<Item />} />
                                 <Route path="/inventory" element={<Item />} />
                                 <Route path="/order" element={<Item />} />
+								<Route path="/crash" element={<Item />} />
                             </Routes>
                         </div>
                     </div>
